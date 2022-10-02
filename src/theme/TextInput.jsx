@@ -2,12 +2,13 @@ import { StyleSheet, TextInput as RNTextInput } from 'react-native'
 import React from 'react'
 import { colors } from './colors'
 
-export default function TextInput({ placeholder, isPassword = false, customStyle }) {
+export default function TextInput({ placeholder, isPassword = false, customStyle, onChangeText }) {
     return (
         <RNTextInput
             style={[styles.input, customStyle]}
             placeholder={placeholder}
             secureTextEntry={isPassword}
+            onChangeText={onChangeText}
         >
 
         </RNTextInput>

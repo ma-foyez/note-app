@@ -9,19 +9,27 @@ import TextInput from '../../theme/TextInput'
 export default function Register({ navigation }) {
 
     const genderOptions = ["Male", "Female"];
-    const [gender, setGender] = useState("Male");
+    // const [gender, setGender] = useState("Male");
+    const [userInfo, setUserInfo] = useState({
+        name: "",
+        age: "",
+        gender: "Male",
+        email: "",
+        password: ""
+    })
 
+    console.log(userInfo);
     return (
         <SafeAreaView style={styles.container}>
-            <TextInput placeholder="Full Name" />
-            <TextInput placeholder="Age" />
+            <TextInput placeholder="Full Name" onChangeText={(text)=> setUserInfo({ ...userInfo, name: text })} />
+            <TextInput placeholder="Age" onChangeText={(text)=> setUserInfo({ ...userInfo, age: text })}  />
             <View style={styles.selectGender}>
                 <Text preset='h4'>Gender :</Text>
                 {
                     genderOptions.map((option, index) => {
-                        const selected = gender === option;
+                        const selected = userInfo.gender === option;
                         return (
-                            <Pressable style={styles.radioContainer} key={index + 1} onPress={() => setGender(option)}>
+                            <Pressable style={styles.radioContainer} key={index + 1} onPress={() => setUserInfo({ ...userInfo, gender: option })}>
                                 <View style={[styles.outerCircle, selected && styles.selectedOuterCircle]}>
                                     <View style={[styles.innerCircle, selected && styles.selectedInnerCircle]}></View>
                                 </View>
@@ -31,8 +39,8 @@ export default function Register({ navigation }) {
                     })
                 }
             </View>
-            <TextInput placeholder="Email Address" />
-            <TextInput placeholder="Password" isPassword={true} />
+            <TextInput placeholder="Email Address" onChangeText={(text)=> setUserInfo({ ...userInfo, email: text })}  />
+            <TextInput placeholder="Password" isPassword={true} onChangeText={(text)=> setUserInfo({ ...userInfo, password: text })}  />
             <Button title="Register" customStyle={{ alignSelf: 'center', marginTop: 40 }} />
 
             <View style={styles.bottomText}>
