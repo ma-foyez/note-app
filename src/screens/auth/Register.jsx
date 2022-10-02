@@ -8,8 +8,8 @@ import TextInput from '../../theme/TextInput'
 
 export default function Register({ navigation }) {
 
-    const genderOptions = ["Male", "Female"]
-    const [gender, setGender] = useState(null)
+    const genderOptions = ["Male", "Female"];
+    const [gender, setGender] = useState("Male");
 
     return (
         <SafeAreaView style={styles.container}>
