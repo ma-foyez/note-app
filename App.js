@@ -8,15 +8,15 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const user = false;
   return (
-    <NavigationContainer>
+    <NavigationContainer style={{paddingHorizontal: 20}}>
       <Stack.Navigator>
         {
           user ?
           protectedRoutes.map((route, index) => (
-              <Stack.Screen key={index + 1} name={route.name} component={route.component} />
+              <Stack.Screen key={index + 1} name={route.name} component={route.component} options={{headerShown: route.headerShown}} />
             ))
             : publicRoutes.map((route, index) => (
-              <Stack.Screen key={index + 1} name={route.name} component={route.component} />
+              <Stack.Screen key={index + 1} name={route.name} component={route.component} options={{headerShown: route.headerShown}} />
             ))
         }
       </Stack.Navigator>
