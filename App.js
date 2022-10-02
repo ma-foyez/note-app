@@ -13,10 +13,10 @@ export default function App() {
         {
           user ?
           protectedRoutes.map((route, index) => (
-              <Stack.Screen key={index + 1} name={route.name} component={route.component} options={{headerShown: route.headerShown}} />
+              <Stack.Screen key={index + 1} name={route.name} component={route.component} options={{headerShown: route.headerShown, title: route.title,  headerTintColor: route.headerTintColor}} />
             ))
             : publicRoutes.map((route, index) => (
-              <Stack.Screen key={index + 1} name={route.name} component={route.component} options={{headerShown: route.headerShown}} />
+              <Stack.Screen key={index + 1} name={route.name} component={route.component} options={{headerShown: route.headerShown, title: route.title,  headerTintColor: route.headerTintColor}}  />
             ))
         }
       </Stack.Navigator>
