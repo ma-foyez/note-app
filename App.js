@@ -9,6 +9,7 @@ import Text from './src/theme/Text';
 import FlashMessage from "react-native-flash-message";
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './src/config/firebaseConfig';
+import { ActivityIndicator, View } from 'react-native';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -24,12 +25,13 @@ export default function App() {
 
 
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   // const user = false;
   useEffect(() => {
     const authSubscription = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        setLoading(false);
       } else {
         setUser(null);
       }
@@ -37,6 +39,13 @@ export default function App() {
     return authSubscription;
   }, [])
 
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator color="blue" size="large" />
+      </View>
+    )
+  }
   // if (!loaded) {
   //   return <Text>Font is loading...</Text>
   // }
