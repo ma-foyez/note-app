@@ -2,19 +2,19 @@ import { typography } from './typography';
 import { colors } from './colors';
 
 const BASE = {
-    fontFamily: typography.regular,
+    //fontFamily: typography.regular,
     fontSize  : 16,
     color     : colors.black,
 }
 
 const BASE_BOLD = {
-    fontFamily: typography.medium,
+    //fontFamily: typography.medium,
     fontSize  : 16,
     color     : colors.black,
 }
 
 const BOLD = {
-    fontFamily: typography.bold,
+    //fontFamily: typography.bold,
     color     : colors.black,
 }
 

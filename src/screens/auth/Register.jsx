@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { auth, db } from '../../config/firebaseConfig'
 import Button from '../../theme/Button'
 import { colors } from '../../theme/colors'
 import Text from '../../theme/Text'
 import TextInput from '../../theme/TextInput'
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { addDoc, collection, getDocs, doc, onSnapshot, query, where } from 'firebase/firestore'
+import { FlashMessage } from '../../components/common/FlashMessage'
 
 export default function Register({ navigation }) {
 
@@ -18,11 +22,29 @@ export default function Register({ navigation }) {
         password: ""
     })
 
-    console.log(userInfo);
+
+    const handleRegister = async () => {
+        try {
+            let collectionRef = collection(db, "users")
+            const result = await createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password);
+            await addDoc(collectionRef, {
+                name: userInfo.name,
+                email: userInfo.email,
+                age: userInfo.age,
+                gender: userInfo.gender,
+                uid: result.user.uid
+            })
+
+
+        } catch (error) {
+            FlashMessage("Already have an account...", "danger");
+        }
+
+    }
     return (
         <SafeAreaView style={styles.container}>
-            <TextInput placeholder="Full Name" onChangeText={(text)=> setUserInfo({ ...userInfo, name: text })} />
-            <TextInput placeholder="Age" onChangeText={(text)=> setUserInfo({ ...userInfo, age: text })}  />
+            <TextInput placeholder="Full Name" onChangeText={(text) => setUserInfo({ ...userInfo, name: text })} />
+            <TextInput placeholder="Age" onChangeText={(text) => setUserInfo({ ...userInfo, age: text })} />
             <View style={styles.selectGender}>
                 <Text preset='h4'>Gender :</Text>
                 {
@@ -39,9 +61,9 @@ export default function Register({ navigation }) {
                     })
                 }
             </View>
-            <TextInput placeholder="Email Address" onChangeText={(text)=> setUserInfo({ ...userInfo, email: text })}  />
-            <TextInput placeholder="Password" isPassword={true} onChangeText={(text)=> setUserInfo({ ...userInfo, password: text })}  />
-            <Button title="Register" customStyle={{ alignSelf: 'center', marginTop: 40 }} />
+            <TextInput placeholder="Email Address" onChangeText={(text) => setUserInfo({ ...userInfo, email: text })} />
+            <TextInput placeholder="Password" isPassword={true} onChangeText={(text) => setUserInfo({ ...userInfo, password: text })} />
+            <Button title="Register" customStyle={{ alignSelf: 'center', marginTop: 40 }} onPress={handleRegister} />
 
             <View style={styles.bottomText}>
                 <Pressable style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('Login')}>
