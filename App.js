@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { protectedRoutes } from './src/routes/ProtectedRoute';
@@ -37,9 +37,9 @@ export default function App() {
     return authSubscription;
   }, [])
 
-  if (!loaded) {
-    return <Text>Font is loading...</Text>
-  }
+  // if (!loaded) {
+  //   return <Text>Font is loading...</Text>
+  // }
 
   return (
     <NavigationContainer style={{ paddingHorizontal: 20 }}>
@@ -50,9 +50,11 @@ export default function App() {
               <Stack.Screen
                 key={index + 1}
                 name={route.name}
-                component={route.component}
+                // component={route.component}
                 options={{ headerShown: route.headerShown, title: route.title, headerTintColor: route.headerTintColor }}
-              />
+              >
+                {(props) => <route.component  {...props} user={user} />}
+              </Stack.Screen>
             ))
             : publicRoutes.map((route, index) => (
               <Stack.Screen
@@ -60,7 +62,7 @@ export default function App() {
                 name={route.name}
                 component={route.component}
                 options={{ headerShown: route.headerShown, title: route.title, headerTintColor: route.headerTintColor }}
-              />
+              ></Stack.Screen>
             ))
         }
       </Stack.Navigator>
