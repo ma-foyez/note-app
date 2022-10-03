@@ -4,5 +4,5 @@ export const FlashMessage = (message = "Data submit successfully!", type = "succ
     return showMessage({
         message: message,
         type: type
-    })
-}
+    });
+};
