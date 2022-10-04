@@ -4,7 +4,7 @@ import List from "../screens/protected/List";
 import { colors } from "../theme/colors";
 
 export const protectedRoutes = [
-    { name: "List", component: List, headerShown: true , title: "List", headerTintColor: colors.green },
-    { name: "Create", component: Create, headerShown: true , title: "Create Note", headerTintColor: colors.green },
-    { name: "Edit", component: Edit, headerShown: true , title: "Edit Note", headerTintColor: colors.green },
+    { name: "List", component: List, headerShown: false , title: "List", headerTintColor: colors.green },
+    { name: "Create", component: Create, headerShown: false , title: "Create Note", headerTintColor: colors.green },
+    { name: "Edit", component: Edit, headerShown: false , title: "Edit Note", headerTintColor: colors.green },
 ]
