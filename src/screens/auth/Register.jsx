@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { auth, db } from '../../config/firebaseConfig'
 import Button from '../../theme/Button'
@@ -13,7 +13,8 @@ import { FlashMessage } from '../../components/common/FlashMessage'
 export default function Register({ navigation }) {
 
     const genderOptions = ["Male", "Female"];
-    // const [gender, setGender] = useState("Male");
+
+    const [loading, setLoading] = useState(false)
     const [userInfo, setUserInfo] = useState({
         name: "",
         age: "",
@@ -24,9 +25,12 @@ export default function Register({ navigation }) {
 
 
     const handleRegister = async () => {
+        setLoading(true)
         try {
+            
             let collectionRef = collection(db, "users")
             const result = await createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password);
+            setLoading(false)
             await addDoc(collectionRef, {
                 name: userInfo.name,
                 email: userInfo.email,
@@ -37,7 +41,8 @@ export default function Register({ navigation }) {
 
 
         } catch (error) {
-            FlashMessage("Already have an account...", "danger");
+            setLoading(false)
+            FlashMessage(error.message, "danger");
         }
 
     }
@@ -61,9 +66,13 @@ export default function Register({ navigation }) {
                     })
                 }
             </View>
-            <TextInput placeholder="Email Address" onChangeText={(text) => setUserInfo({ ...userInfo, email: text })} />
+            <TextInput placeholder="Email Address" autoCapitalize="none" onChangeText={(text) => setUserInfo({ ...userInfo, email: text })} />
             <TextInput placeholder="Password" isPassword={true} onChangeText={(text) => setUserInfo({ ...userInfo, password: text })} />
-            <Button title="Register" customStyle={{ alignSelf: 'center', marginTop: 40 }} onPress={handleRegister} />
+
+            {loading ?
+                <ActivityIndicator /> :
+                <Button title="Register" customStyle={{ alignSelf: 'center', marginTop: 40 }} onPress={handleRegister} />
+            }
 
             <View style={styles.bottomText}>
                 <Pressable style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('Login')}>
