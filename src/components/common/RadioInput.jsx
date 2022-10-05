@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     outerCircle: {
-        height: 20,
-        width: 20,
+        height: 18,
+        width: 18,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: colors.gray,

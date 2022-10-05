@@ -6,7 +6,7 @@ import Text from './Text'
 export default function Button({ title, onPress, customStyle }) {
     return (
         <TouchableOpacity style={[styles.button, customStyle]} onPress={onPress}>
-            <Text>{title}</Text>
+            <Text style={styles.title}>{title}</Text>
         </TouchableOpacity>
     )
 }
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        fontSize: 16
+        fontSize: 16,
+        color: colors.white,
     }
 })

@@ -10,6 +10,7 @@ import FlashMessage from "react-native-flash-message";
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './src/config/firebaseConfig';
 import { ActivityIndicator, View } from 'react-native';
+import { colors } from './src/theme/colors';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -44,6 +45,7 @@ export default function App() {
   // useEffect(()=>{
   //   signOut(auth);
   // },[])
+
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -65,7 +67,7 @@ export default function App() {
                 key={index + 1}
                 name={route.name}
                 // component={route.component}
-                options={{ headerShown: route.headerShown, title: route.title, headerTintColor: route.headerTintColor }}
+                options={{ headerShown: route.headerShown, title: route.title, headerTintColor: colors.green, headerTitleAlign: 'center' }}
               >
                 {(props) => <route.component  {...props} user={user} />}
               </Stack.Screen>
@@ -75,7 +77,7 @@ export default function App() {
                 key={index + 1}
                 name={route.name}
                 component={route.component}
-                options={{ headerShown: route.headerShown, title: route.title, headerTintColor: route.headerTintColor }}
+                options={{ headerShown: route.headerShown, title: route.title, headerTintColor: colors.green, headerTitleAlign: 'center' }}
               ></Stack.Screen>
             ))
         }
