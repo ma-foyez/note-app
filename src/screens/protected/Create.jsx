@@ -1,24 +1,44 @@
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native'
 import Text from '../../theme/Text'
 import TextInput from '../../theme/TextInput'
 import RadioInput from '../../components/common/RadioInput'
+import Button from '../../theme/Button'
+import { addDoc, collection } from 'firebase/firestore'
+import { db } from '../../config/firebaseConfig'
 
-export default function Create() {
-  
+export default function Create({ user, navigation, route }) {
+
   const themesOption = [
-    {label: "Red", value: "#de0f04"},
-    {label: "Blue", value: "#007a8c"},
-    {label: "Green", value: "#06b864"},
+    { label: "Red", value: "#de0f04" },
+    { label: "Blue", value: "#007a8c" },
+    { label: "Green", value: "#06b864" },
   ];
-  const [noteColor, setNoteColor] = React.useState('white');
+  const [loading, setLoading] = useState(false)
   const [note, setNote] = useState({
     title: "",
     description: "",
     theme: ""
   })
 
+  const handleSubmitNote = async () => {
+    let collectionRef = collection(db, "notes");
+    setLoading(true);
+    try {
+      await addDoc(collectionRef, {
+        uid: user.uid,
+        title: note.title,
+        description: note.description,
+        theme: note.theme,
+      })
+      setLoading(false);
+    } catch (err) {
+      console.log('err', err);
+      setLoading(false);
+    }
+
+  }
   return (
     <SafeAreaView style={styles.container}>
       <TextInput placeholder="Title" onChangeText={(text) => setNote({ ...note, title: text })} />
@@ -30,14 +50,17 @@ export default function Create() {
         {themesOption.map((option, index) => (
           <RadioInput
             key={index}
-            label={option.label}
-            value={noteColor}
-            setValue={setNoteColor}
+            option={option}
+            value={note}
+            setValue={setNote}
             size="small"
           />
         ))}
       </View>
-
+      {loading ?
+        <ActivityIndicator /> :
+        <Button title="Register" customStyle={{ alignSelf: 'center', marginTop: 40 }} onPress={handleSubmitNote} />
+      }
     </SafeAreaView>
   )
 }

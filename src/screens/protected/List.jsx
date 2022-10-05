@@ -5,7 +5,7 @@ import Text from '../../theme/Text';
 import { AntDesign } from '@expo/vector-icons';
 
 export default function List({ user, navigation, route }) {
-  console.log('user :>> ', user);
+  // console.log('user :>> ', user);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.flexBetween}>

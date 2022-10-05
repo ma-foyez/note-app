@@ -3,15 +3,15 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { colors } from '../../theme/colors';
 import Text from '../../theme/Text';
 
-export default function RadioInput({ label, value, setValue, size = 'small' }) {
-    const isSelected = value === label;
+export default function RadioInput({ option, value, setValue, size = 'small' }) {
+    const isSelected = value.theme === option.value;
     return (
-        <TouchableOpacity onPress={() => setValue(label)}>
+        <TouchableOpacity onPress={() => setValue({ ...value, theme: option.value })}>
             <View style={styles.container}>
                 <View style={[styles.outerCircle, isSelected && styles.selectedOuterCircle, size === 'big' && styles.bigOuterCircle]}>
                     <View style={[styles.innerCircle, isSelected && styles.selectedInnerCircle, size === 'big' && styles.bigInnerCircle]} />
                 </View>
-                <Text style={{ marginLeft: 10, fontWeight: 'bold' }}>{label}</Text>
+                <Text style={{ marginLeft: 10, fontWeight: 'bold' }}>{option.label}</Text>
             </View>
         </TouchableOpacity>
     )
