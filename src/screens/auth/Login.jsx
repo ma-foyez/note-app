@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ActivityIndicator, Image, Pressable, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { auth } from '../../config/firebaseConfig'
 import Button from '../../theme/Button'
@@ -32,20 +32,21 @@ export default function Login({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image
-        source={require("./../../../assets/note-app/working.png")}
-        style={styles.loginImg}
-      />
+      <ScrollView>
+        <Image
+          source={require("./../../../assets/note-app/working.png")}
+          style={styles.loginImg}
+        />
 
-      <Text preset='h4' style={{ textAlign: 'center', fontWeight: 'bold', marginTop: -30, marginBottom: 20 }}>Never Forget Your Notes</Text>
-      <TextInput placeholder="Email Address" autoCapitalize="none" onChangeText={(text) => setLoginInfo({ ...loginInfo, email: text })} />
-      <TextInput placeholder="Password" isPassword={true} onChangeText={(text) => setLoginInfo({ ...loginInfo, password: text })} />
-
+        <Text preset='h4' style={{ textAlign: 'center', fontWeight: 'bold', marginTop: -30, marginBottom: 20 }}>Never Forget Your Notes</Text>
+        <TextInput placeholder="Email Address" autoCapitalize="none" onChangeText={(text) => setLoginInfo({ ...loginInfo, email: text })} />
+        <TextInput placeholder="Password" isPassword={true} onChangeText={(text) => setLoginInfo({ ...loginInfo, password: text })} />
+      </ScrollView>
+      
       {loading ?
-        <ActivityIndicator /> :
-        <Button title="Login" customStyle={{ alignSelf: 'center', marginTop: 40 }} onPress={handleLogin} />
-      }
-
+          <ActivityIndicator /> :
+          <Button title="Login" customStyle={{ alignSelf: 'center', marginTop: 40 }} onPress={handleLogin} />
+        }
       <View style={styles.bottomText}>
         <Pressable style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('Register')}>
           <Text>
@@ -56,7 +57,6 @@ export default function Login({ navigation }) {
           </Text>
         </Pressable>
       </View>
-
     </SafeAreaView>
   )
 }

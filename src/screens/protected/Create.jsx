@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native'
 import Text from '../../theme/Text'
 import TextInput from '../../theme/TextInput'
 import RadioInput from '../../components/common/RadioInput'
@@ -41,26 +41,28 @@ export default function Create({ user, navigation, route }) {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <TextInput placeholder="Title" onChangeText={(text) => setNote({ ...note, title: text })} />
-      <TextInput placeholder="Description" multiline={true} onChangeText={(text) => setNote({ ...note, description: text })} />
-      <View style={{ marginTop: 20 }}>
-        <Text style={{ marginBottom: 15, fontSize: 18 }}>
-          Select your note color
-        </Text>
-        {themesOption.map((option, index) => (
-          <RadioInput
-            key={index}
-            option={option}
-            value={note}
-            setValue={setNote}
-            size="small"
-          />
-        ))}
-      </View>
-      {loading ?
-        <ActivityIndicator /> :
-        <Button title="Register" customStyle={{ alignSelf: 'center', marginTop: 40 }} onPress={handleSubmitNote} />
-      }
+      <ScrollView>
+        <TextInput placeholder="Title" onChangeText={(text) => setNote({ ...note, title: text })} />
+        <TextInput placeholder="Description" multiline={true} onChangeText={(text) => setNote({ ...note, description: text })} />
+        <View style={{ marginTop: 20 }}>
+          <Text style={{ marginBottom: 15, fontSize: 18 }}>
+            Select your note color
+          </Text>
+          {themesOption.map((option, index) => (
+            <RadioInput
+              key={index}
+              option={option}
+              value={note}
+              setValue={setNote}
+              size="small"
+            />
+          ))}
+        </View>
+        {loading ?
+          <ActivityIndicator /> :
+          <Button title="Register" customStyle={{ alignSelf: 'center', marginTop: 40 }} onPress={handleSubmitNote} />
+        }
+      </ScrollView>
     </SafeAreaView>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { auth, db } from '../../config/firebaseConfig'
 import Button from '../../theme/Button'
@@ -27,7 +27,7 @@ export default function Register({ navigation }) {
     const handleRegister = async () => {
         setLoading(true)
         try {
-            
+
             let collectionRef = collection(db, "users")
             const result = await createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password);
             setLoading(false)
@@ -48,32 +48,34 @@ export default function Register({ navigation }) {
     }
     return (
         <SafeAreaView style={styles.container}>
-            <TextInput placeholder="Full Name" onChangeText={(text) => setUserInfo({ ...userInfo, name: text })} />
-            <TextInput placeholder="Age" onChangeText={(text) => setUserInfo({ ...userInfo, age: text })} />
-            <View style={styles.selectGender}>
-                <Text preset='h4'>Gender :</Text>
-                {
-                    genderOptions.map((option, index) => {
-                        const selected = userInfo.gender === option;
-                        return (
-                            <Pressable style={styles.radioContainer} key={index + 1} onPress={() => setUserInfo({ ...userInfo, gender: option })}>
-                                <View style={[styles.outerCircle, selected && styles.selectedOuterCircle]}>
-                                    <View style={[styles.innerCircle, selected && styles.selectedInnerCircle]}></View>
-                                </View>
-                                <Text style={styles.radioText}>{option}</Text>
-                            </Pressable>
-                        )
-                    })
-                }
-            </View>
-            <TextInput placeholder="Email Address" autoCapitalize="none" onChangeText={(text) => setUserInfo({ ...userInfo, email: text })} />
-            <TextInput placeholder="Password" isPassword={true} onChangeText={(text) => setUserInfo({ ...userInfo, password: text })} />
+            <ScrollView>
+                <TextInput placeholder="Full Name" onChangeText={(text) => setUserInfo({ ...userInfo, name: text })} />
+                <TextInput placeholder="Age" onChangeText={(text) => setUserInfo({ ...userInfo, age: text })} />
+                <View style={styles.selectGender}>
+                    <Text preset='h4'>Gender :</Text>
+                    {
+                        genderOptions.map((option, index) => {
+                            const selected = userInfo.gender === option;
+                            return (
+                                <Pressable style={styles.radioContainer} key={index + 1} onPress={() => setUserInfo({ ...userInfo, gender: option })}>
+                                    <View style={[styles.outerCircle, selected && styles.selectedOuterCircle]}>
+                                        <View style={[styles.innerCircle, selected && styles.selectedInnerCircle]}></View>
+                                    </View>
+                                    <Text style={styles.radioText}>{option}</Text>
+                                </Pressable>
+                            )
+                        })
+                    }
+                </View>
+                <TextInput placeholder="Email Address" autoCapitalize="none" onChangeText={(text) => setUserInfo({ ...userInfo, email: text })} />
+                <TextInput placeholder="Password" isPassword={true} onChangeText={(text) => setUserInfo({ ...userInfo, password: text })} />
+              
+            </ScrollView>
 
             {loading ?
-                <ActivityIndicator /> :
-                <Button title="Register" customStyle={{ alignSelf: 'center', marginTop: 40 }} onPress={handleRegister} />
-            }
-
+                    <ActivityIndicator /> :
+                    <Button title="Register" customStyle={{ alignSelf: 'center', marginTop: 40 }} onPress={handleRegister} />
+                }
             <View style={styles.bottomText}>
                 <Pressable style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('Login')}>
                     <Text>
